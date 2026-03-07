@@ -1,0 +1,230 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block page_title %}Пользователь: {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="glass-card">
+            <div class="card-body text-center p-4">
+                <div class="position-relative d-inline-block">
+                    <img src="{{ user.avatar_url }}" alt="{{ user.username }}" 
+                         class="rounded-circle mb-3" 
+                         style="width: 150px; height: 150px; object-fit: cover; border: 3px solid var(--accent-color);"
+                         onerror="this.src='{% static 'images/avatar-placeholder.jpg' %}'">
+                    <div class="position-absolute bottom-0 end-0 bg-dark rounded-circle p-2" style="border: 2px solid var(--card-bg);">
+                        {% if user.is_active %}
+                            <i class="fas fa-circle text-success" style="font-size: 0.8rem;" title="Активен"></i>
+                        {% else %}
+                            <i class="fas fa-circle text-danger" style="font-size: 0.8rem;" title="Неактивен"></i>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <h4 class="fw-bold">{{ user.get_full_name|default:user.username }}</h4>
+                <p class="text-muted mb-3">@{{ user.username }}</p>
+                
+                <div class="mb-4">
+                    {% if user.is_staff %}
+                        <span class="badge-glass bg-gradient-primary">Администратор</span>
+                    {% else %}
+                        <span class="badge-glass">Пользователь</span>
+                    {% endif %}
+                </div>
+                
+                <div class="text-start glass-card p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Email:</span>
+                        <span class="fw-medium">{{ user.email }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Телефон:</span>
+                        <span class="fw-medium">{{ user.userprofile.phone|default:"Не указан" }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">Зарегистрирован:</span>
+                        <span class="fw-medium">{{ user.date_joined|date:"d.m.Y H:i" }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-muted">Последний вход:</span>
+                        <span class="fw-medium">{{ user.last_login|date:"d.m.Y H:i"|default:"Никогда" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card mt-3">
+            <div class="card-body text-center p-4">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="p-3 rounded" style="background: rgba(139, 92, 246, 0.1);">
+                            <h3 class="fw-bold text-primary mb-1">{{ total_orders }}</h3>
+                            <small class="text-muted">Заказов</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded" style="background: rgba(16, 185, 129, 0.1);">
+                            <h3 class="fw-bold text-success mb-1">{{ total_reviews }}</h3>
+                            <small class="text-muted">Отзывов</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="glass-card">
+            <div class="card-header border-0 pb-0 pt-3 px-4">
+                <h5 class="fw-bold mb-0">Редактирование пользователя</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form">
+                                <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+                                {{ form.username }}
+                                
+                                {% if form.username.errors %}
+                                <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form">
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                                {{ form.email }}  
+                                {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <div class="form">
+                                <label for="{{ form.first_name.id_for_label }}">Имя</label>                               
+                                {{ form.first_name }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form">
+                                <label for="{{ form.last_name.id_for_label }}">Фамилия</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <div class="form-check form-switch">
+                                {{ form.is_staff }}
+                                <label class="form-check-label" for="{{ form.is_staff.id_for_label }}">Администратор</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-switch">
+                                {{ form.is_active }}
+                                <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Активен</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'dashboard:user_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i>Назад к списку
+                        </a>
+                        <button type="submit" class="btn btn-neon">
+                            <i class="fas fa-save me-2"></i>Сохранить изменения
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Последние заказы -->
+        <div class="glass-card mt-4">
+            <div class="card-header border-0 pb-0 pt-3 px-4">
+                <h5 class="fw-bold mb-0">Последние заказы</h5>
+            </div>
+            <div class="card-body p-0">
+                {% if user_orders %}
+                <div class="table-responsive">
+                    <table class="table table-glass mb-0">
+                        <thead>
+                            <tr>
+                                <th>№ заказа</th>
+                                <th>Дата</th>
+                                <th>Сумма</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in user_orders %}
+                            <tr>
+                                <td class="fw-bold">
+                                    <a href="{% url 'dashboard:order_detail' order.pk %}" class="text-decoration-none" style="color: var(--accent-color);">#{{ order.order_number }}</a>
+                                </td>
+                                <td>{{ order.created_at|date:"d.m.Y" }}</td>
+                                <td>{{ order.total_price }} руб.</td>
+                                <td>
+                                    <span class="badge-glass">
+                                        {{ order.get_status_display }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-shopping-basket fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">У пользователя нет заказов</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Последние отзывы -->
+        <div class="glass-card mt-4">
+            <div class="card-header border-0 pb-0 pt-3 px-4">
+                <h5 class="fw-bold mb-0">Последние отзывы</h5>
+            </div>
+            <div class="card-body">
+                {% if user_reviews %}
+                <div class="list-group list-group-glass">
+                    {% for review in user_reviews %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong class="text-primary">{{ review.product.name }}</strong>
+                            <div>
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.rating %}
+                                        <i class="fas fa-star text-warning"></i>
+                                    {% else %}
+                                        <i class="far fa-star text-warning"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <p class="mb-2">{{ review.text|truncatewords:20 }}</p>
+                        <small class="text-muted">{{ review.created_at|date:"d.m.Y" }}</small>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-star fa-3x text-muted mb-3"></i>
+                    <p class="text-muted">У пользователя нет отзывов</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

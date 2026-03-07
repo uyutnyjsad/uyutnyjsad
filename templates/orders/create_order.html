@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+            <div class="card-header border-0 py-3" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+                <h4 class="mb-0 text-dark"><i class="fas fa-shopping-bag me-2"></i> Оформление заказа</h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h5 class="mb-3" style="color: var(--primary-dark);">Ваш заказ</h5>
+                        <div class="card border-0" style="background: var(--gradient-light);">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless mb-0">
+                                        <thead>
+                                            <tr style="border-bottom: 2px solid var(--primary-dark);">
+                                                <th>Товар</th>
+                                                <th class="text-center">Кол-во</th>
+                                                <th class="text-end">Цена</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in cart.items.all %}
+                                            <tr>
+                                                <td class="fw-bold">{{ item.product.name }}</td>
+                                                <td class="text-center">{{ item.quantity }}</td>
+                                                <td class="text-end">{{ item.total_price }} ₽</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr style="border-top: 2px solid var(--primary-dark);">
+                                                <td colspan="2" class="fw-bold">Итого:</td>
+                                                <td class="text-end fw-bold h5" style="color: var(--primary-dark);">{{ cart.total_price }} ₽</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h5 class="mb-3" style="color: var(--primary-dark);">Данные для доставки</h5>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="d-grid gap-2 mt-4">
+                                <button type="submit" class="btn btn-success btn-lg py-3" style="border-radius: 30px;">
+                                    <i class="fas fa-check me-2"></i> Подтвердить заказ
+                                </button>
+                                <a href="{% url 'cart_view' %}" class="btn btn-outline-secondary py-3" style="border-radius: 30px;">
+                                    <i class="fas fa-arrow-left me-2"></i> Вернуться в корзину
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.form-control:focus {
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 0.2rem rgba(26, 60, 52, 0.25);
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+</style>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Заказ #{{ order.order_number }} - Уютный Сад{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none">Главная</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'order_list' %}" class="text-decoration-none">Мои заказы</a></li>
+        <li class="breadcrumb-item active" style="color: var(--primary-dark);">Заказ #{{ order.order_number }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-header border-0 py-3" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+                <h4 class="mb-0 text-dark"><i class="fas fa-receipt me-2"></i> Заказ #{{ order.order_number }}</h4>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <h6 style="color: var(--primary-dark);">Информация о заказе</h6>
+                        <p class="mb-2"><strong>Дата:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+                        <p class="mb-2"><strong>Статус:</strong> 
+                            <span class="badge" style="background: var(--primary-dark); color: white;">
+                                {{ order.get_status_display }}
+                            </span>
+                        </p>
+                        <p class="mb-0"><strong>Сумма:</strong> <span style="color: var(--primary-dark);">{{ order.total_price }} ₽</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 style="color: var(--primary-dark);">Адрес доставки</h6>
+                        <p class="mb-0">{{ order.shipping_address|linebreaks }}</p>
+                    </div>
+                </div>
+
+                <h6 style="color: var(--primary-dark);">Состав заказа</h6>
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead style="background: var(--primary-dark); color: white; border-radius: 10px;">
+                            <tr>
+                                <th style="border-radius: 10px 0 0 10px;">Товар</th>
+                                <th class="text-center">Цена</th>
+                                <th class="text-center">Количество</th>
+                                <th class="text-end" style="border-radius: 0 10px 10px 0;">Итого</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="{{ item.product.image_url }}" 
+                                             alt="{{ item.product.name }}"
+                                             style="width: 60px; height: 60px; object-fit: cover;"
+                                             class="rounded me-3"
+                                             onerror="this.src='{% static 'images/product-placeholder.jpg' %}'">
+                                        <div>
+                                            <h6 class="mb-0 fw-bold">{{ item.product.name }}</h6>
+                                            <small class="text-muted">{{ item.product.category.name }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ item.price }} ₽</td>
+                                <td class="text-center">{{ item.quantity }}</td>
+                                <td class="text-end fw-bold" style="color: var(--primary-dark);">{{ item.total_price }} ₽</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold">Общая сумма:</td>
+                                <td class="text-end fw-bold h5" style="color: var(--primary-dark);">{{ order.total_price }} ₽</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% if order.status == 'pending' %}
+        <div class="card border-0 shadow-sm border-warning mb-4" style="border-radius: 15px;">
+            <div class="card-header border-0 py-3" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+                <h6 class="mb-0 text-dark"><i class="fas fa-exclamation-triangle me-2"></i> Заказ в обработке</h6>
+            </div>
+            <div class="card-body">
+                <p class="mb-3">Ваш заказ находится в обработке. Мы свяжемся с вами в ближайшее время для подтверждения.</p>
+                <button class="btn btn-outline-danger" style="border-radius: 30px;" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                    <i class="fas fa-times me-2"></i>Отменить заказ
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-header border-0 py-3" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+                <h6 class="mb-0 text-dark">Контактная информация</h6>
+            </div>
+            <div class="card-body">
+                <p><strong>Получатель:</strong><br>
+                {{ order.user.get_full_name|default:order.user.username }}</p>
+                
+                <p><strong>Телефон:</strong><br>
+                {{ order.phone_number }}</p>
+                
+                <p><strong>Email:</strong><br>
+                {{ order.email }}</p>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-header border-0 py-3" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+                <h6 class="mb-0 text-dark">История статусов</h6>
+            </div>
+            <div class="card-body">
+                <div class="timeline">
+                    <div class="timeline-item {% if order.status != 'pending' %}completed{% endif %}">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h6>Создан</h6>
+                        </div>
+                    </div>
+                    
+                    {% if order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}
+                    <div class="timeline-item {% if order.status != 'confirmed' %}completed{% endif %}">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h6>Подтвержден</h6>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if order.status == 'shipped' or order.status == 'delivered' %}
+                    <div class="timeline-item {% if order.status != 'shipped' %}completed{% endif %}">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h6>Отправлен</h6>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if order.status == 'delivered' %}
+                    <div class="timeline-item completed">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h6>Доставлен</h6>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+            <div class="card-header border-0 py-3" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+                <h6 class="mb-0 text-dark">Помощь</h6>
+            </div>
+            <div class="card-body">
+                <p>Если у вас есть вопросы по заказу, свяжитесь с нашей службой поддержки:</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone me-2"></i> +7 (999) 123-45-67</li>
+                    <li><i class="fas fa-envelope me-2"></i> support@ekodecor.ru</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal для отмены заказа -->
+{% if order.status == 'pending' %}
+<div class="modal fade" id="cancelModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0" style="border-radius: 15px;">
+            <div class="modal-header border-0" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+                <h5 class="modal-title text-dark">Отмена заказа</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите отменить заказ #{{ order.order_number }}?</p>
+                <p class="text-warning">После отмены восстановить заказ будет невозможно.</p>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-secondary" style="border-radius: 30px;" data-bs-dismiss="modal">Отмена</button>
+                <form method="post" action="{% url 'cancel_order' order.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" style="border-radius: 30px;">Отменить заказ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<style>
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+.timeline-item.completed .timeline-marker {
+    background: var(--primary-dark);
+}
+.timeline-marker {
+    position: absolute;
+    left: -30px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #dee2e6;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #dee2e6;
+}
+.timeline-content {
+    padding-bottom: 10px;
+}
+.timeline-item.completed .timeline-content {
+    opacity: 0.7;
+}
+
+.breadcrumb {
+    background: var(--gradient-light);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.breadcrumb-item.active {
+    color: var(--primary-dark) !important;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,414 @@
+<!-- register.html - рабочая версия с Django формой -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-md-8 col-lg-7">
+        <div class="card border-0 shadow-lg mb-5">
+            <div class="card-header border-0 py-4 text-center" style="background: var(--primary-dark);">
+                <i class="fas fa-user-plus fa-3x mb-3 text-light"></i>
+                <h2 class="mb-0 text-light" style="font-family: 'Playfair Display', serif;">Создание аккаунта</h2>
+                <p class="mb-0 mt-2 text-light opacity-75">Присоединяйтесь к нашему сообществу</p>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-user me-2" style="color: var(--primary-dark);"></i>Имя
+                            </label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.first_name.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-user me-2" style="color: var(--primary-dark);"></i>Фамилия
+                            </label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.last_name.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.username.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-at me-2" style="color: var(--primary-dark);"></i>Имя пользователя
+                        </label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.username.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Только буквы, цифры и символы @/./+/-/_</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-envelope me-2" style="color: var(--primary-dark);"></i>Email адрес
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.email.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-lock me-2" style="color: var(--primary-dark);"></i>Пароль
+                        </label>
+                        <div class="input-group">
+                            {{ form.password1 }}
+                            <button type="button" class="input-group-text toggle-password" 
+                                    style="background: var(--accent-light); border: 1px solid var(--primary-dark); border-left: none;">
+                                <i class="fas fa-eye" style="color: var(--primary-dark);"></i>
+                            </button>
+                        </div>
+                        {% if form.password1.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.password1.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="password-strength mt-2">
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <small class="password-strength-text text-muted"></small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-lock me-2" style="color: var(--primary-dark);"></i>Подтверждение пароля
+                        </label>
+                        <div class="input-group">
+                            {{ form.password2 }}
+                            <button type="button" class="input-group-text toggle-password" 
+                                    style="background: var(--accent-light); border: 1px solid var(--primary-dark); border-left: none;">
+                                <i class="fas fa-eye" style="color: var(--primary-dark);"></i>
+                            </button>
+                        </div>
+                        {% if form.password2.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.password2.errors %}
+                                    <small>{{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="password-match mt-2">
+                            <small class="text-muted"></small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 form-check">
+                        <input type="checkbox" class="form-check-input" id="agreeTerms" required
+                               style="border-color: var(--primary-dark);">
+                        <label class="form-check-label" for="agreeTerms">
+                            Я соглашаюсь с <a href="#" class="fw-bold" style="color: var(--primary-dark);">условиями использования</a> и 
+                            <a href="#" class="fw-bold" style="color: var(--primary-dark);">политикой конфиденциальности</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success btn-lg w-100 py-3 mb-4" 
+                            style="background: var(--primary-dark); border-color: var(--primary-dark);">
+                        <i class="fas fa-user-plus me-2"></i>Создать аккаунт
+                    </button>
+                </form>
+            </div>
+            <div class="card-footer bg-light text-center py-3">
+                <p class="mb-0">Уже есть аккаунт? 
+                    <a href="{% url 'login' %}" class="fw-bold text-decoration-none" 
+                       style="color: var(--primary-dark);">Войдите здесь</a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Преимущества регистрации -->
+        <div class="row mt-5">
+            <div class="col-12 text-center mb-4">
+                <h4 class="text-dark" style="font-family: 'Playfair Display', serif;">Преимущества регистрации</h4>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+                <div class="benefit-item p-4 card border-0 shadow-sm h-100">
+                    <i class="fas fa-shopping-bag fa-2x mb-3" style="color: var(--primary-dark);"></i>
+                    <h6 style="font-family: 'Playfair Display', serif;">Быстрые заказы</h6>
+                    <p class="small text-muted">Оформляйте заказы в один клик</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+                <div class="benefit-item p-4 card border-0 shadow-sm h-100">
+                    <i class="fas fa-history fa-2x mb-3" style="color: var(--primary-dark);"></i>
+                    <h6 style="font-family: 'Playfair Display', serif;">История заказов</h6>
+                    <p class="small text-muted">Отслеживайте статус заказов</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+                <div class="benefit-item p-4 card border-0 shadow-sm h-100">
+                    <i class="fas fa-gift fa-2x mb-3" style="color: var(--primary-dark);"></i>
+                    <h6 style="font-family: 'Playfair Display', serif;">Специальные предложения</h6>
+                    <p class="small text-muted">Получайте персональные скидки</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.benefit-item {
+    transition: transform 0.3s ease;
+    border: none !important;
+}
+
+.benefit-item:hover {
+    transform: translateY(-5px);
+}
+
+.password-strength .progress-bar {
+    transition: width 0.3s ease;
+    border-radius: 5px;
+}
+
+.password-match .text-success {
+    color: var(--primary-dark) !important;
+}
+
+.form-control {
+    border: 1px solid var(--primary-dark);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(26, 60, 52, 0.25);
+    border-color: var(--primary-dark);
+}
+
+.toggle-password {
+    cursor: pointer;
+    border: 1px solid;
+    border-left: none !important;
+}
+
+.toggle-password:hover {
+    background-color: var(--primary-dark) !important;
+    color: white !important;
+}
+
+.toggle-password:hover i {
+    color: white !important;
+}
+
+.btn-success:hover {
+    background: transparent !important;
+    color: var(--primary-dark) !important;
+    border: 2px solid var(--primary-dark) !important;
+    transform: translateY(-3px);
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group .form-control {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
+
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--accent-light);
+    border: 1px solid var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 2rem !important;
+    }
+    
+    .benefit-item {
+        margin-bottom: 1rem;
+    }
+    
+    .row .col-md-6 {
+        margin-bottom: 1rem;
+    }
+}
+
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Переключение видимости пароля
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const inputGroup = this.closest('.input-group');
+            const input = inputGroup.querySelector('input');
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    });
+    
+    // Проверка сложности пароля
+    const password1 = document.getElementById('{{ form.password1.id_for_label }}');
+    const password2 = document.getElementById('{{ form.password2.id_for_label }}');
+    const progressBar = document.querySelector('.password-strength .progress-bar');
+    const strengthText = document.querySelector('.password-strength-text');
+    const matchText = document.querySelector('.password-match small');
+    
+    function checkPasswordStrength(password) {
+        let strength = 0;
+        
+        if (password.length >= 8) strength += 25;
+        if (/[a-z]/.test(password)) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9]/.test(password)) strength += 25;
+        if (/[^a-zA-Z0-9]/.test(password)) strength += 25;
+        
+        return Math.min(strength, 100);
+    }
+    
+    function updatePasswordStrength() {
+        const strength = checkPasswordStrength(password1.value);
+        progressBar.style.width = strength + '%';
+        
+        if (strength < 25) {
+            progressBar.className = 'progress-bar bg-danger';
+            strengthText.textContent = 'Слабый пароль';
+        } else if (strength < 50) {
+            progressBar.className = 'progress-bar bg-warning';
+            strengthText.textContent = 'Средний пароль';
+        } else if (strength < 75) {
+            progressBar.className = 'progress-bar bg-info';
+            strengthText.textContent = 'Хороший пароль';
+        } else {
+            progressBar.className = 'progress-bar bg-success';
+            strengthText.textContent = 'Надежный пароль';
+        }
+    }
+    
+    function checkPasswordMatch() {
+        if (password2.value === '') {
+            matchText.textContent = '';
+        } else if (password1.value === password2.value) {
+            matchText.textContent = 'Пароли совпадают';
+            matchText.className = 'text-success';
+        } else {
+            matchText.textContent = 'Пароли не совпадают';
+            matchText.className = 'text-danger';
+        }
+    }
+    
+    if (password1 && password2) {
+        password1.addEventListener('input', updatePasswordStrength);
+        password2.addEventListener('input', checkPasswordMatch);
+    }
+    
+    // Валидация формы
+    const form = document.querySelector('.needs-validation');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    }
+
+    // Анимация карточек преимуществ
+    const benefitItems = document.querySelectorAll('.benefit-item');
+    benefitItems.forEach(item => {
+        item.style.transition = 'all 0.3s ease';
+    });
+    
+    // Автоматическое скрытие alert через 5 секунд
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }, 5000);
+    });
+});
+</script>
+{% endblock %}

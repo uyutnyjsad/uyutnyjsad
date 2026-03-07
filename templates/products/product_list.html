@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+<div class="row">
+    <!-- Боковая панель фильтров -->
+    <div class="col-lg-3 col-md-4 mb-4">
+        <form method="get" action="{% url 'product_list' %}" id="filterForm">
+            <div class="filter-sidebar p-4 rounded-3 shadow-sm" style="background: white; position: sticky; top: 100px;">
+                <h4 class="filter-title mb-4 pb-3 border-bottom" style="color: var(--primary-dark); font-family: 'Playfair Display', serif;">
+                    <i class="fas fa-filter me-2" style="color: var(--accent-gold);"></i>Фильтры
+                </h4>
+                
+                <!-- Поиск по имени -->
+                <div class="filter-group mb-4">
+                    <h6 class="filter-title mb-3" style="color: var(--primary-light); font-weight: 600;">Поиск по названию</h6>
+                    <div class="input-group">
+                        <input type="text" name="search" value="{{ search_query }}" class="form-control" placeholder="Введите название..." 
+                               style="border-radius: 20px; border: 1px solid var(--accent-light);">
+                    </div>
+                </div>
+                
+                <!-- Фильтр по цене -->
+                <div class="filter-group mb-4">
+                    <h6 class="filter-title mb-3" style="color: var(--primary-light); font-weight: 600;">Цена, ₽</h6>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <input type="number" name="min_price" value="{{ min_price }}" class="form-control form-control-sm" placeholder="От" 
+                                   min="0" max="{{ price_range.max_price|default:10000 }}"
+                                   style="border-radius: 15px; border: 1px solid var(--accent-light);">
+                        </div>
+                        <div class="col-6">
+                            <input type="number" name="max_price" value="{{ max_price }}" class="form-control form-control-sm" placeholder="До" 
+                                   min="0" max="{{ price_range.max_price|default:10000 }}"
+                                   style="border-radius: 15px; border: 1px solid var(--accent-light);">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">
+                            {% if price_range.min_price and price_range.max_price %}
+                                {{ price_range.min_price }} - {{ price_range.max_price }} ₽
+                            {% else %}
+                                0 - 10000 ₽
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Категории -->
+                <div class="filter-group mb-4">
+                    <h6 class="filter-title mb-3" style="color: var(--primary-light); font-weight: 600;">Категории</h6>
+                    <div class="list-group list-group-flush">
+                        <label class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center" 
+                               style="background: transparent; border-radius: 8px; transition: all 0.3s ease;">
+                            <input type="radio" name="category" value="all" {% if selected_category == 'all' %}checked{% endif %} 
+                                   class="me-2" onchange="this.form.submit()">
+                            Все товары
+                            <span class="badge bg-light text-dark ms-auto">{{ products.paginator.count }}</span>
+                        </label>
+                        {% for category in categories %}
+                        <label class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center" 
+                               style="background: transparent; border-radius: 8px; transition: all 0.3s ease;">
+                            <input type="radio" name="category" value="{{ category.slug }}" 
+                                   {% if selected_category == category.slug %}checked{% endif %} 
+                                   class="me-2" onchange="this.form.submit()">
+                            <i class="fas fa-{{ category.icon|default:'leaf' }} me-2" style="width: 20px;"></i>{{ category.name }}
+                            <span class="badge bg-light text-dark ms-auto">{{ category.product_count }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Наличие -->
+                <div class="filter-group mb-4">
+                    <h6 class="filter-title mb-3" style="color: var(--primary-light); font-weight: 600;">Наличие</h6>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="in_stock" id="inStock" 
+                               {% if in_stock_only %}checked{% endif %} onchange="this.form.submit()"
+                               style="background-color: var(--accent-light); border-color: var(--accent-gold);">
+                        <label class="form-check-label" for="inStock" style="color: var(--text-dark);">
+                            Только в наличии
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Сортировка -->
+                <div class="filter-group mb-4">
+                    <h6 class="filter-title mb-3" style="color: var(--primary-light); font-weight: 600;">Сортировка</h6>
+                    <select name="sort_by" class="form-select form-select-sm" onchange="this.form.submit()"
+                            style="border-radius: 15px; border: 1px solid var(--accent-light);">
+                        <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>По новизне</option>
+                        <option value="price_asc" {% if sort_by == 'price_asc' %}selected{% endif %}>По цене (возрастание)</option>
+                        <option value="price_desc" {% if sort_by == 'price_desc' %}selected{% endif %}>По цене (убывание)</option>
+                        <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>По названию (А-Я)</option>
+                        <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>По названию (Я-А)</option>
+                    </select>
+                </div>
+                
+                <!-- Кнопки фильтров -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-check me-2"></i>Применить фильтры
+                    </button>
+                    <a href="{% url 'product_list' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-redo me-2"></i>Сбросить
+                    </a>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="col-lg-9 col-md-8">
+        <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded-3" style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <div>
+                <h2 class="h3 mb-1" style="color: var(--primary-dark); font-family: 'Playfair Display', serif;">
+                    {% if selected_category != 'all' %}
+                        {{ categories|get_category:selected_category }} - 
+                    {% endif %}
+                    Каталог товаров
+                </h2>
+                <p class="text-muted mb-0">Найдено {{ products.paginator.count }} товаров</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="text-muted me-3 d-none d-md-block">Показано: {{ products.start_index }} - {{ products.end_index }} из {{ products.paginator.count }}</span>
+            </div>
+        </div>
+        
+        <!-- Сетка товаров -->
+        <div class="products-grid">
+            {% for product in products %}
+            <div class="product-item fade-in">
+                <div class="card product-card h-100 border-0 shadow-sm">
+                    <div class="position-relative overflow-hidden rounded-top">
+                        <img src="{{ product.image_url }}" class="card-img-top product-image" alt="{{ product.name }}" 
+                             onerror="this.src='{% static 'images/product-placeholder.jpg' %}'" 
+                             style="height: 220px; object-fit: cover; transition: transform 0.5s ease;">
+                        {% if not product.in_stock %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-danger">Нет в наличии</span>
+                        </div>
+                        {% else %}
+                            {% if product.is_new %}
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <span class="badge bg-success">Новинка</span>
+                            </div>
+                            {% endif %}
+
+                        {% endif %}
+                        <div class="position-absolute bottom-0 start-0 end-0 p-3" style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);">
+                            <h5 class="text-white mb-0">{{ product.name }}</h5>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="product-description text-muted small mb-3">{{ product.description|truncatewords:20 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="product-price fw-bold" style="color: var(--primary-light); font-size: 1.3rem;">{{ product.price }} ₽</span>
+                            </div>
+                            {% if product.in_stock %}
+                            <span class="badge bg-success small">В наличии</span>
+                            {% else %}
+                            <span class="badge bg-danger small">Нет в наличии</span>
+                            {% endif %}
+                        </div>
+                        
+                    </div>
+                    <div class="card-footer border-0 bg-transparent p-4 pt-0">
+                        <div class="product-actions d-flex gap-2">
+                            <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline-success btn-sm flex-fill">
+                                <i class="fas fa-eye me-1"></i>Подробнее
+                            </a>
+                            {% if user.is_authenticated and product.in_stock %}
+                            <form method="post" action="{% url 'add_to_cart' product.id %}" class="d-inline add-to-cart-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-success btn-sm rounded-circle" style="width: 40px; height: 40px;" title="Добавить в корзину">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-search fa-3x mb-3" style="color: var(--accent-light);"></i>
+                <h4 style="color: var(--primary-dark);">Товары не найдены</h4>
+                <p class="text-muted">Попробуйте изменить параметры фильтрации</p>
+                <a href="{% url 'product_list' %}" class="btn btn-success">Сбросить фильтры</a>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Пагинация -->
+        {% if products.has_other_pages %}
+        <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if products.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ products.previous_page_number }}{% if filter_params %}&{{ filter_params }}{% endif %}" 
+                       aria-label="Previous" style="border-radius: 20px; margin: 0 2px; border: 1px solid var(--accent-light);">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                
+                {% for i in products.paginator.page_range %}
+                    {% if products.number == i %}
+                    <li class="page-item active">
+                        <a class="page-link" href="?page={{ i }}{% if filter_params %}&{{ filter_params }}{% endif %}" 
+                           style="border-radius: 20px; margin: 0 2px; background: var(--primary-dark); border-color: var(--primary-dark);">{{ i }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ i }}{% if filter_params %}&{{ filter_params }}{% endif %}" 
+                           style="border-radius: 20px; margin: 0 2px; border: 1px solid var(--accent-light);">{{ i }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if products.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ products.next_page_number }}{% if filter_params %}&{{ filter_params }}{% endif %}" 
+                       aria-label="Next" style="border-radius: 20px; margin: 0 2px; border: 1px solid var(--accent-light);">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Добавляем кастомный тег для получения категории по slug -->
+{% load custom_filters %}
+
+<style>
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.product-item {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.list-group-item.active {
+    background: var(--accent-light) !important;
+    color: var(--primary-dark) !important;
+    border-left: 3px solid var(--accent-gold) !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .filter-sidebar {
+        position: static !important;
+        margin-bottom: 1rem;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Анимация появления товаров
+    document.querySelectorAll('.product-item').forEach((item, index) => {
+        item.style.animationDelay = (index * 0.1) + 's';
+    });
+    
+    // Автоматическая отправка формы при изменении некоторых полей
+    document.querySelectorAll('input[type="radio"], select').forEach(element => {
+        element.addEventListener('change', function() {
+            document.getElementById('filterForm').submit();
+        });
+    });
+});
+</script>
+{% endblock %}

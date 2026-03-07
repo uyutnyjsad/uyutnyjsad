@@ -1,0 +1,1318 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$QslCwbP75Gtfkck0mp6dF0$9+9k2t/swTOxxIqvfSw8nmbbkpXXg2EHlTsq8Jo7Kl4=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "Алексей",
+      "last_name": "Иванов",
+      "email": "admin@garden-decor.ru",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-12-01T10:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$pRbYjFeWUZTeJAQ4G5rBS9$EbueVweAox6+LVttFiz6vK9SaDhjZgvgPexrT+ltPrs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "olga_sadovod",
+      "first_name": "Ольга",
+      "last_name": "Петрова",
+      "email": "olga@mail.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-12-05T14:30:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$pRbYjFeWUZTeJAQ4G5rBS9$EbueVweAox6+LVttFiz6vK9SaDhjZgvgPexrT+ltPrs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "serg_garden",
+      "first_name": "Сергей",
+      "last_name": "Сидоров",
+      "email": "serg@yandex.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-12-08T09:15:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$pRbYjFeWUZTeJAQ4G5rBS9$EbueVweAox6+LVttFiz6vK9SaDhjZgvgPexrT+ltPrs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "marina_dacha",
+      "first_name": "Марина",
+      "last_name": "Козлова",
+      "email": "marina.k@gmail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-12-12T16:20:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$pRbYjFeWUZTeJAQ4G5rBS9$EbueVweAox6+LVttFiz6vK9SaDhjZgvgPexrT+ltPrs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "viktor_green",
+      "first_name": "Виктор",
+      "last_name": "Зеленский",
+      "email": "viktor.green@inbox.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-12-18T11:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$1000000$pRbYjFeWUZTeJAQ4G5rBS9$EbueVweAox6+LVttFiz6vK9SaDhjZgvgPexrT+ltPrs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "anna_flowers",
+      "first_name": "Анна",
+      "last_name": "Цветкова",
+      "email": "anna.flowers@mail.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-12-22T08:45:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+
+  {
+    "model": "users.userprofile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "phone": "+7 (999) 123-45-67",
+      "address": "г. Москва, ул. Садовая, д. 1",
+      "avatar": "users/avatars/admin.jpg",
+      "created_at": "2025-12-01T10:00:00Z",
+      "updated_at": "2026-01-15T12:00:00Z"
+    }
+  },
+  {
+    "model": "users.userprofile",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "phone": "+7 (916) 234-56-78",
+      "address": "г. Москва, ул. Цветочная, д. 25, кв. 12",
+      "avatar": "users/avatars/olga.jpg",
+      "created_at": "2025-12-05T14:30:00Z",
+      "updated_at": "2026-01-18T16:45:00Z"
+    }
+  },
+  {
+    "model": "users.userprofile",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "phone": "+7 (903) 345-67-89",
+      "address": "Московская область, г. Химки, ул. Дачная, д. 5",
+      "avatar": "",
+      "created_at": "2025-12-08T09:15:00Z",
+      "updated_at": "2026-01-20T11:20:00Z"
+    }
+  },
+  {
+    "model": "users.userprofile",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "phone": "+7 (925) 456-78-90",
+      "address": "г. Санкт-Петербург, пр. Ленина, д. 45, кв. 8",
+      "avatar": "users/avatars/marina.jpg",
+      "created_at": "2025-12-12T16:20:00Z",
+      "updated_at": "2026-01-22T10:30:00Z"
+    }
+  },
+  {
+    "model": "users.userprofile",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "phone": "+7 (926) 567-89-01",
+      "address": "Московская область, г. Одинцово, ул. Лесная, д. 12",
+      "avatar": "",
+      "created_at": "2025-12-18T11:00:00Z",
+      "updated_at": "2026-01-25T14:15:00Z"
+    }
+  },
+  {
+    "model": "users.userprofile",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "phone": "+7 (915) 678-90-12",
+      "address": "г. Москва, ул. Садовников, д. 33, кв. 5",
+      "avatar": "users/avatars/anna.jpg",
+      "created_at": "2025-12-22T08:45:00Z",
+      "updated_at": "2026-01-28T09:00:00Z"
+    }
+  },
+
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Садовые фигуры",
+      "slug": "sadovye-figury",
+      "description": "Декоративные фигуры для украшения сада: гномы, животные, сказочные персонажи",
+      "image": "categories/garden-figures.jpg",
+      "icon": "tree"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Фонтаны и водоемы",
+      "slug": "fontany-i-vodoemy",
+      "description": "Декоративные фонтаны, пруды и элементы для водоемов",
+      "image": "categories/fountains.jpg",
+      "icon": "water"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Садовые фонари",
+      "slug": "sadovye-fonari",
+      "description": "Освещение для сада и приусадебного участка: солнечные, LED, классические",
+      "image": "categories/garden-lights.jpg",
+      "icon": "lightbulb"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 4,
+    "fields": {
+      "name": "Декоративные заборы",
+      "slug": "dekorativnye-zabory",
+      "description": "Элементы ограждения и зонирования сада: заборчики, бордюры, решетки",
+      "image": "categories/fences.jpg",
+      "icon": "fence"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "name": "Кашпо и вазоны",
+      "slug": "kashpo-i-vazony",
+      "description": "Декоративные емкости для растений: керамика, пластик, бетон",
+      "image": "categories/pots.jpg",
+      "icon": "flower"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+      "name": "Садовая мебель",
+      "slug": "sadovaya-mebel",
+      "description": "Скамейки, столы, качели и другая мебель для отдыха в саду",
+      "image": "categories/furniture.jpg",
+      "icon": "chair"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 7,
+    "fields": {
+      "name": "Декоративные камни",
+      "slug": "dekorativnye-kamni",
+      "description": "Искусственные и натуральные камни для ландшафтного дизайна",
+      "image": "categories/stones.jpg",
+      "icon": "mountain"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 8,
+    "fields": {
+      "name": "Арки и перголы",
+      "slug": "arki-i-pergoly",
+      "description": "Декоративные арки, перголы и шпалеры для вьющихся растений",
+      "image": "categories/arches.jpg",
+      "icon": "archway"
+    }
+  },
+
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Садовый гном с фонарем",
+      "slug": "sadovyj-gnom-s-fonarem",
+      "description": "Классический садовый гном высотой 40 см с декоративным фонарем. Изготовлен из морозостойкого полистоуна.",
+      "price": "2500.00",
+      "image": "products/garden-gnome.jpg",
+      "category": 1,
+      "in_stock": true,
+      "created_at": "2025-12-01T08:00:00Z",
+      "updated_at": "2026-01-10T14:30:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "Каменный фонтан 'Родник'",
+      "slug": "kamennyj-fontan-rodnik",
+      "description": "Натуральный каменный фонтан с LED-подсветкой, диаметр 80 см. Насос в комплекте.",
+      "price": "12500.00",
+      "image": "products/stone-fountain.jpg",
+      "category": 2,
+      "in_stock": true,
+      "created_at": "2025-12-02T10:00:00Z",
+      "updated_at": "2026-01-12T09:15:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "Солнечный фонарь 'Шар'",
+      "slug": "solnechnyj-fonar-shar",
+      "description": "Садовый фонарь на солнечной батарее в форме шара диаметром 20 см. Автоматическое включение в темноте.",
+      "price": "1200.00",
+      "image": "products/solar-light.jpg",
+      "category": 3,
+      "in_stock": true,
+      "created_at": "2025-12-03T12:00:00Z",
+      "updated_at": "2026-01-18T16:20:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "Деревянный заборчик 'Кантри'",
+      "slug": "derevyannyj-zaborchik-kantri",
+      "description": "Декоративный забор из натурального дерева, длина 2 метра, высота 35 см. Обработан защитным составом.",
+      "price": "1800.00",
+      "image": "products/wooden-fence.jpg",
+      "category": 4,
+      "in_stock": true,
+      "created_at": "2025-12-04T09:00:00Z",
+      "updated_at": "2026-01-05T11:45:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "Керамическое кашпо 'Цветущий сад'",
+      "slug": "keramicheskoe-kashpo-cvetuschij-sad",
+      "description": "Большое керамическое кашпо ручной работы с цветочным орнаментом. Диаметр 40 см, высота 35 см.",
+      "price": "3200.00",
+      "image": "products/ceramic-pot.jpg",
+      "category": 5,
+      "in_stock": true,
+      "created_at": "2025-12-05T14:00:00Z",
+      "updated_at": "2026-01-15T13:30:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "name": "Фигура 'Семья ежиков'",
+      "slug": "figura-semya-ezhikov",
+      "description": "Набор из 3 садовых фигур ежиков разного размера. Материал - полистоун, устойчив к морозам.",
+      "price": "3800.00",
+      "image": "products/hedgehog-family.jpg",
+      "category": 1,
+      "in_stock": true,
+      "created_at": "2025-12-06T10:30:00Z",
+      "updated_at": "2026-01-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+      "name": "Фигура 'Аист с гнездом'",
+      "slug": "figura-aist-s-gnezdom",
+      "description": "Декоративный аист высотой 85 см с гнездом. Символ семейного счастья и благополучия.",
+      "price": "4500.00",
+      "image": "products/stork.jpg",
+      "category": 1,
+      "in_stock": true,
+      "created_at": "2025-12-07T11:00:00Z",
+      "updated_at": "2026-01-18T09:30:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "name": "Каскадный фонтан 'Водопад'",
+      "slug": "kaskadnyj-fontan-vodopad",
+      "description": "Трехъярусный каскадный фонтан с имитацией камня. Высота 120 см, насос и подсветка включены.",
+      "price": "18900.00",
+      "image": "products/cascade-fountain.jpg",
+      "category": 2,
+      "in_stock": true,
+      "created_at": "2025-12-08T14:00:00Z",
+      "updated_at": "2026-01-10T16:45:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 9,
+    "fields": {
+      "name": "Мини-пруд 'Лагуна'",
+      "slug": "mini-prud-laguna",
+      "description": "Готовый пластиковый пруд объемом 250 литров. Размер 150x100 см, глубина 45 см.",
+      "price": "7500.00",
+      "image": "products/mini-pond.jpg",
+      "category": 2,
+      "in_stock": true,
+      "created_at": "2025-12-09T09:00:00Z",
+      "updated_at": "2026-01-22T11:15:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "name": "Фонарь на столбе 'Классика'",
+      "slug": "fonar-na-stolbe-klassika",
+      "description": "Уличный фонарь в классическом стиле. Высота 220 см, патрон E27, степень защиты IP44.",
+      "price": "8500.00",
+      "image": "products/classic-lantern.jpg",
+      "category": 3,
+      "in_stock": true,
+      "created_at": "2025-12-10T10:00:00Z",
+      "updated_at": "2026-01-15T14:20:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "name": "Гирлянда садовая 'Звездное небо'",
+      "slug": "girlyanda-sadovaya-zvezdnoe-nebo",
+      "description": "LED-гирлянда на солнечной батарее, 100 лампочек, длина 12 метров. 8 режимов свечения.",
+      "price": "1800.00",
+      "image": "products/garden-lights-string.jpg",
+      "category": 3,
+      "in_stock": true,
+      "created_at": "2025-12-11T12:00:00Z",
+      "updated_at": "2026-01-20T10:30:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 12,
+    "fields": {
+      "name": "Металлический заборчик 'Прованс'",
+      "slug": "metallicheskij-zaborchik-provans",
+      "description": "Кованый декоративный забор в стиле прованс. Секция 60x45 см, покрытие - порошковая краска.",
+      "price": "2200.00",
+      "image": "products/metal-fence.jpg",
+      "category": 4,
+      "in_stock": true,
+      "created_at": "2025-12-12T11:30:00Z",
+      "updated_at": "2026-01-12T15:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 13,
+    "fields": {
+      "name": "Пластиковый бордюр 'Камень'",
+      "slug": "plastikovyj-bordyur-kamen",
+      "description": "Гибкий садовый бордюр с имитацией камня. Длина 3 метра, высота 15 см.",
+      "price": "950.00",
+      "image": "products/plastic-border.jpg",
+      "category": 4,
+      "in_stock": true,
+      "created_at": "2025-12-13T09:45:00Z",
+      "updated_at": "2026-01-18T11:20:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 14,
+    "fields": {
+      "name": "Бетонный вазон 'Античность'",
+      "slug": "betonnyj-vazon-antichnost",
+      "description": "Большой бетонный вазон в античном стиле. Диаметр 60 см, высота 50 см, вес 35 кг.",
+      "price": "5500.00",
+      "image": "products/concrete-vase.jpg",
+      "category": 5,
+      "in_stock": true,
+      "created_at": "2025-12-14T13:00:00Z",
+      "updated_at": "2026-01-08T10:45:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 15,
+    "fields": {
+      "name": "Подвесное кашпо 'Корзина'",
+      "slug": "podvesnoe-kashpo-korzina",
+      "description": "Плетеное подвесное кашпо с кокосовым вкладышем. Диаметр 30 см, цепочка 40 см.",
+      "price": "890.00",
+      "image": "products/hanging-basket.jpg",
+      "category": 5,
+      "in_stock": true,
+      "created_at": "2025-12-15T15:30:00Z",
+      "updated_at": "2026-01-21T09:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 16,
+    "fields": {
+      "name": "Садовая скамейка 'Парковая'",
+      "slug": "sadovaya-skamejka-parkovaya",
+      "description": "Классическая чугунная скамейка с деревянными рейками. Длина 150 см, ширина 60 см.",
+      "price": "12000.00",
+      "image": "products/garden-bench.jpg",
+      "category": 6,
+      "in_stock": true,
+      "created_at": "2025-12-16T10:00:00Z",
+      "updated_at": "2026-01-14T12:30:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 17,
+    "fields": {
+      "name": "Качели садовые 'Релакс'",
+      "slug": "kacheli-sadovye-relaks",
+      "description": "Садовые качели на 3 места с навесом. Каркас из металла, сиденье мягкое с подушками.",
+      "price": "15500.00",
+      "image": "products/garden-swing.jpg",
+      "category": 6,
+      "in_stock": false,
+      "created_at": "2025-12-17T14:00:00Z",
+      "updated_at": "2026-01-25T08:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 18,
+    "fields": {
+      "name": "Декоративный валун 'Гранит'",
+      "slug": "dekorativnyj-valun-granit",
+      "description": "Искусственный камень-валун для декора сада. Размер 80x60x40 см, вес всего 8 кг.",
+      "price": "4200.00",
+      "image": "products/decorative-boulder.jpg",
+      "category": 7,
+      "in_stock": true,
+      "created_at": "2025-12-18T11:00:00Z",
+      "updated_at": "2026-01-19T13:45:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 19,
+    "fields": {
+      "name": "Галька декоративная белая 20 кг",
+      "slug": "galka-dekorativnaya-belaya",
+      "description": "Натуральная белая галька фракции 20-40 мм. Мешок 20 кг, покрывает около 0.3 м².",
+      "price": "650.00",
+      "image": "products/white-pebbles.jpg",
+      "category": 7,
+      "in_stock": true,
+      "created_at": "2025-12-19T09:30:00Z",
+      "updated_at": "2026-01-16T14:00:00Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 20,
+    "fields": {
+      "name": "Арка садовая 'Романтика'",
+      "slug": "arka-sadovaya-romantika",
+      "description": "Металлическая арка для вьющихся растений. Высота 240 см, ширина 140 см, глубина 40 см.",
+      "price": "6800.00",
+      "image": "products/garden-arch.jpg",
+      "category": 8,
+      "in_stock": true,
+      "created_at": "2025-12-20T12:00:00Z",
+      "updated_at": "2026-01-23T10:15:00Z"
+    }
+  },
+
+  {
+    "model": "products.review",
+    "pk": 1,
+    "fields": {
+      "product": 1,
+      "user": 2,
+      "rating": 5,
+      "text": "Отличный гном! Качество на высоте, дочка в восторге. Украсил наш сад.",
+      "created_at": "2025-12-20T15:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 2,
+    "fields": {
+      "product": 1,
+      "user": 3,
+      "rating": 4,
+      "text": "Хороший гном, но краска немного потрескалась после зимы.",
+      "created_at": "2025-12-22T11:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 3,
+    "fields": {
+      "product": 2,
+      "user": 1,
+      "rating": 5,
+      "text": "Прекрасный фонтан! Отлично вписался в ландшафт. Подсветка создает волшебную атмосферу вечером.",
+      "created_at": "2025-12-18T18:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 4,
+    "fields": {
+      "product": 3,
+      "user": 2,
+      "rating": 4,
+      "text": "Фонарики симпатичные, но ночью светят не очень ярко.",
+      "created_at": "2026-01-05T10:45:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 5,
+    "fields": {
+      "product": 4,
+      "user": 3,
+      "rating": 5,
+      "text": "Заборчик отличный! Установил вокруг клумбы - смотрится очень стильно.",
+      "created_at": "2025-12-25T13:15:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 6,
+    "fields": {
+      "product": 5,
+      "user": 4,
+      "rating": 5,
+      "text": "Кашпо превзошло ожидания! Роспись очень красивая, качество керамики отличное.",
+      "created_at": "2026-01-08T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 7,
+    "fields": {
+      "product": 6,
+      "user": 5,
+      "rating": 5,
+      "text": "Ежики просто чудо! Все соседи спрашивают где купили. Очень милые.",
+      "created_at": "2026-01-12T16:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 8,
+    "fields": {
+      "product": 6,
+      "user": 6,
+      "rating": 4,
+      "text": "Хорошие фигурки, но самый маленький ежик немного криво стоит.",
+      "created_at": "2026-01-15T11:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 9,
+    "fields": {
+      "product": 7,
+      "user": 2,
+      "rating": 5,
+      "text": "Аист великолепный! Поставили при входе - теперь это визитная карточка нашего участка.",
+      "created_at": "2026-01-06T09:45:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 10,
+    "fields": {
+      "product": 8,
+      "user": 4,
+      "rating": 5,
+      "text": "Шикарный фонтан! Звук воды успокаивает, подсветка вечером - просто сказка.",
+      "created_at": "2026-01-18T18:15:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 11,
+    "fields": {
+      "product": 10,
+      "user": 3,
+      "rating": 4,
+      "text": "Фонарь качественный, но установка требует бетонирования основания.",
+      "created_at": "2025-12-28T12:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 12,
+    "fields": {
+      "product": 11,
+      "user": 6,
+      "rating": 5,
+      "text": "Гирлянда отличная! Работает всё лето без проблем, заряжается от солнца быстро.",
+      "created_at": "2026-01-20T20:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 13,
+    "fields": {
+      "product": 12,
+      "user": 5,
+      "rating": 5,
+      "text": "Заборчик в стиле прованс - именно то что искала! Смотрится очень изящно.",
+      "created_at": "2026-01-10T15:45:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 14,
+    "fields": {
+      "product": 14,
+      "user": 1,
+      "rating": 4,
+      "text": "Вазон тяжелый, но выглядит монументально. Простоит века!",
+      "created_at": "2025-12-30T10:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 15,
+    "fields": {
+      "product": 16,
+      "user": 4,
+      "rating": 5,
+      "text": "Скамейка шикарная! Сидеть удобно, выглядит как в парке. Рекомендую!",
+      "created_at": "2026-01-08T17:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 16,
+    "fields": {
+      "product": 16,
+      "user": 5,
+      "rating": 4,
+      "text": "Отличная скамейка, но доставка была долгой - 2 недели ждал.",
+      "created_at": "2026-01-16T11:20:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 17,
+    "fields": {
+      "product": 18,
+      "user": 2,
+      "rating": 5,
+      "text": "Камень как настоящий! Никто не верит что он искусственный. Легкий, удобно переносить.",
+      "created_at": "2026-01-19T14:00:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 18,
+    "fields": {
+      "product": 20,
+      "user": 6,
+      "rating": 5,
+      "text": "Арка прекрасная! Клематис уже оплетает, скоро будет райский уголок.",
+      "created_at": "2026-01-22T16:45:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 19,
+    "fields": {
+      "product": 15,
+      "user": 3,
+      "rating": 3,
+      "text": "Кашпо симпатичное, но кокосовый вкладыш быстро рассыпается.",
+      "created_at": "2026-01-14T10:30:00Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.review",
+    "pk": 20,
+    "fields": {
+      "product": 9,
+      "user": 5,
+      "rating": 5,
+      "text": "Пруд установили за выходные. Качество пластика отличное, форма удобная.",
+      "created_at": "2026-01-25T12:00:00Z",
+      "is_active": true
+    }
+  },
+
+  {
+    "model": "cart.cart",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "created_at": "2026-01-26T10:00:00Z",
+      "updated_at": "2026-01-26T10:00:00Z"
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "created_at": "2026-01-25T14:30:00Z",
+      "updated_at": "2026-01-26T09:15:00Z"
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "created_at": "2026-01-24T16:45:00Z",
+      "updated_at": "2026-01-25T11:20:00Z"
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "created_at": "2026-01-26T08:00:00Z",
+      "updated_at": "2026-01-26T14:30:00Z"
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "created_at": "2026-01-25T19:00:00Z",
+      "updated_at": "2026-01-26T11:45:00Z"
+    }
+  },
+  {
+    "model": "cart.cart",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "created_at": "2026-01-26T12:00:00Z",
+      "updated_at": "2026-01-26T15:20:00Z"
+    }
+  },
+
+  {
+    "model": "cart.cartitem",
+    "pk": 1,
+    "fields": {
+      "cart": 1,
+      "product": 1,
+      "quantity": 2
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 2,
+    "fields": {
+      "cart": 1,
+      "product": 3,
+      "quantity": 4
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 3,
+    "fields": {
+      "cart": 2,
+      "product": 8,
+      "quantity": 1
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 4,
+    "fields": {
+      "cart": 2,
+      "product": 5,
+      "quantity": 2
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 5,
+    "fields": {
+      "cart": 3,
+      "product": 4,
+      "quantity": 3
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 6,
+    "fields": {
+      "cart": 3,
+      "product": 19,
+      "quantity": 5
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 7,
+    "fields": {
+      "cart": 4,
+      "product": 16,
+      "quantity": 1
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 8,
+    "fields": {
+      "cart": 4,
+      "product": 20,
+      "quantity": 2
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 9,
+    "fields": {
+      "cart": 4,
+      "product": 11,
+      "quantity": 3
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 10,
+    "fields": {
+      "cart": 5,
+      "product": 9,
+      "quantity": 1
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 11,
+    "fields": {
+      "cart": 5,
+      "product": 18,
+      "quantity": 2
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 12,
+    "fields": {
+      "cart": 6,
+      "product": 6,
+      "quantity": 1
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 13,
+    "fields": {
+      "cart": 6,
+      "product": 7,
+      "quantity": 1
+    }
+  },
+  {
+    "model": "cart.cartitem",
+    "pk": 14,
+    "fields": {
+      "cart": 6,
+      "product": 15,
+      "quantity": 4
+    }
+  },
+
+  {
+    "model": "orders.order",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "order_number": "ORD-2025-001",
+      "status": "delivered",
+      "total_price": "5700.00",
+      "shipping_address": "г. Москва, ул. Цветочная, д. 25, кв. 12",
+      "phone_number": "+7 (916) 234-56-78",
+      "email": "olga@mail.ru",
+      "created_at": "2025-12-10T11:00:00Z",
+      "updated_at": "2025-12-18T14:30:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "order_number": "ORD-2025-002",
+      "status": "delivered",
+      "total_price": "3600.00",
+      "shipping_address": "Московская область, г. Химки, ул. Дачная, д. 5",
+      "phone_number": "+7 (903) 345-67-89",
+      "email": "serg@yandex.ru",
+      "created_at": "2025-12-15T13:45:00Z",
+      "updated_at": "2025-12-23T10:15:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "order_number": "ORD-2026-001",
+      "status": "shipped",
+      "total_price": "12500.00",
+      "shipping_address": "г. Москва, ул. Цветочная, д. 25, кв. 12",
+      "phone_number": "+7 (916) 234-56-78",
+      "email": "olga@mail.ru",
+      "created_at": "2026-01-15T09:30:00Z",
+      "updated_at": "2026-01-20T16:00:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 4,
+    "fields": {
+      "user": 1,
+      "order_number": "ORD-2026-002",
+      "status": "confirmed",
+      "total_price": "9700.00",
+      "shipping_address": "г. Москва, ул. Садовая, д. 1",
+      "phone_number": "+7 (999) 123-45-67",
+      "email": "admin@garden-decor.ru",
+      "created_at": "2026-01-22T15:20:00Z",
+      "updated_at": "2026-01-23T10:00:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 5,
+    "fields": {
+      "user": 3,
+      "order_number": "ORD-2025-003",
+      "status": "cancelled",
+      "total_price": "2400.00",
+      "shipping_address": "Московская область, г. Химки, ул. Дачная, д. 5",
+      "phone_number": "+7 (903) 345-67-89",
+      "email": "serg@yandex.ru",
+      "created_at": "2025-12-20T12:10:00Z",
+      "updated_at": "2025-12-24T11:40:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 6,
+    "fields": {
+      "user": 4,
+      "order_number": "ORD-2025-004",
+      "status": "delivered",
+      "total_price": "18900.00",
+      "shipping_address": "г. Санкт-Петербург, пр. Ленина, д. 45, кв. 8",
+      "phone_number": "+7 (925) 456-78-90",
+      "email": "marina.k@gmail.com",
+      "created_at": "2025-12-22T10:30:00Z",
+      "updated_at": "2026-01-05T15:45:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 7,
+    "fields": {
+      "user": 5,
+      "order_number": "ORD-2026-003",
+      "status": "delivered",
+      "total_price": "8000.00",
+      "shipping_address": "Московская область, г. Одинцово, ул. Лесная, д. 12",
+      "phone_number": "+7 (926) 567-89-01",
+      "email": "viktor.green@inbox.ru",
+      "created_at": "2026-01-05T14:00:00Z",
+      "updated_at": "2026-01-15T11:30:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 8,
+    "fields": {
+      "user": 6,
+      "order_number": "ORD-2026-004",
+      "status": "shipped",
+      "total_price": "11100.00",
+      "shipping_address": "г. Москва, ул. Садовников, д. 33, кв. 5",
+      "phone_number": "+7 (915) 678-90-12",
+      "email": "anna.flowers@mail.ru",
+      "created_at": "2026-01-18T16:00:00Z",
+      "updated_at": "2026-01-24T09:30:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 9,
+    "fields": {
+      "user": 4,
+      "order_number": "ORD-2026-005",
+      "status": "pending",
+      "total_price": "15500.00",
+      "shipping_address": "г. Санкт-Петербург, пр. Ленина, д. 45, кв. 8",
+      "phone_number": "+7 (925) 456-78-90",
+      "email": "marina.k@gmail.com",
+      "created_at": "2026-01-26T11:00:00Z",
+      "updated_at": "2026-01-26T11:00:00Z"
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 10,
+    "fields": {
+      "user": 5,
+      "order_number": "ORD-2026-006",
+      "status": "confirmed",
+      "total_price": "6800.00",
+      "shipping_address": "Московская область, г. Одинцово, ул. Лесная, д. 12",
+      "phone_number": "+7 (926) 567-89-01",
+      "email": "viktor.green@inbox.ru",
+      "created_at": "2026-01-25T18:30:00Z",
+      "updated_at": "2026-01-26T09:15:00Z"
+    }
+  },
+
+  {
+    "model": "orders.orderitem",
+    "pk": 1,
+    "fields": {
+      "order": 1,
+      "product": 1,
+      "quantity": 1,
+      "price": "2500.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 2,
+    "fields": {
+      "order": 1,
+      "product": 3,
+      "quantity": 2,
+      "price": "1200.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 3,
+    "fields": {
+      "order": 1,
+      "product": 13,
+      "quantity": 1,
+      "price": "950.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 4,
+    "fields": {
+      "order": 2,
+      "product": 4,
+      "quantity": 2,
+      "price": "1800.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 5,
+    "fields": {
+      "order": 3,
+      "product": 2,
+      "quantity": 1,
+      "price": "12500.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 6,
+    "fields": {
+      "order": 4,
+      "product": 5,
+      "quantity": 2,
+      "price": "3200.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 7,
+    "fields": {
+      "order": 4,
+      "product": 1,
+      "quantity": 1,
+      "price": "2500.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 8,
+    "fields": {
+      "order": 4,
+      "product": 15,
+      "quantity": 1,
+      "price": "890.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 9,
+    "fields": {
+      "order": 5,
+      "product": 3,
+      "quantity": 2,
+      "price": "1200.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 10,
+    "fields": {
+      "order": 6,
+      "product": 8,
+      "quantity": 1,
+      "price": "18900.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 11,
+    "fields": {
+      "order": 7,
+      "product": 6,
+      "quantity": 1,
+      "price": "3800.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 12,
+    "fields": {
+      "order": 7,
+      "product": 18,
+      "quantity": 1,
+      "price": "4200.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 13,
+    "fields": {
+      "order": 8,
+      "product": 20,
+      "quantity": 1,
+      "price": "6800.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 14,
+    "fields": {
+      "order": 8,
+      "product": 11,
+      "quantity": 2,
+      "price": "1800.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 15,
+    "fields": {
+      "order": 8,
+      "product": 15,
+      "quantity": 1,
+      "price": "890.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 16,
+    "fields": {
+      "order": 9,
+      "product": 17,
+      "quantity": 1,
+      "price": "15500.00"
+    }
+  },
+  {
+    "model": "orders.orderitem",
+    "pk": 17,
+    "fields": {
+      "order": 10,
+      "product": 20,
+      "quantity": 1,
+      "price": "6800.00"
+    }
+  }
+]

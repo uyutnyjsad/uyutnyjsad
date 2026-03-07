@@ -1,0 +1,74 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block page_title %}Заказ #{{ order.order_number }}{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="glass-card">
+            <div class="card-header border-0 pb-0 pt-3 px-4">
+                <h5 class="fw-bold mb-0">Редактирование заказа</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'dashboard:order_list' %}" class="btn btn-secondary">Отмена</a>
+                        <button type="submit" class="btn btn-neon">Сохранить изменения</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="glass-card">
+            <div class="card-header border-0 pb-0 pt-3 px-4">
+                <h5 class="fw-bold mb-0">Информация о заказе</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Статус:</span>
+                    <span class="badge-glass">{{ order.get_status_display }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Общая сумма:</span>
+                    <span class="fw-bold text-primary">{{ order.total_price }} руб.</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Дата создания:</span>
+                    <span>{{ order.created_at|date:"d.m.Y H:i" }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted">Пользователь:</span>
+                    <span class="fw-medium">{{ order.user.username }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card mt-3">
+            <div class="card-header border-0 pb-0 pt-3 px-4">
+                <h5 class="fw-bold mb-0">Товары в заказе</h5>
+            </div>
+            <div class="card-body">
+                {% for item in order.items.all %}
+                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-dark">
+                    <div>
+                        <span class="fw-medium">{{ item.product.name }}</span>
+                        <br>
+                        <small class="text-muted">{{ item.quantity }} × {{ item.price }} руб.</small>
+                    </div>
+                    <span class="fw-bold">{{ item.total_price }} руб.</span>
+                </div>
+                {% endfor %}
+                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-dark">
+                    <span class="fw-bold">Итого:</span>
+                    <span class="fw-bold text-primary">{{ order.total_price }} руб.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

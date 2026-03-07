@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section py-5 mb-5" style="background: var(--gradient-light); border-radius: 20px;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                <div class="text-center">
+                    <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Садовая декорация" class="img-fluid rounded-3 shadow-lg" style="max-height: 450px; object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <h1 class="display-4 fw-bold mb-4" style="color: var(--primary-dark);">Уютный Сад</h1>
+                <p class="lead mb-4" style="color: var(--primary-light); font-size: 1.2rem;">Создайте уникальный сад с нашими экологичными декорациями, которые гармонично вписываются в природный ландшафт</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'product_list' %}" class="btn btn-success btn-lg px-4 py-3">
+                        <i class="fas fa-shopping-bag me-2"></i>Смотреть каталог
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Categories -->
+<section class="categories-section mb-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="display-5 fw-bold mb-3" style="color: var(--primary-dark);">Популярные категории</h2>
+                <p class="text-muted">Выберите категорию для просмотра товаров</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for category in categories %}
+            <div class="col-md-4">
+                <div class="card category-card h-100 border-0 shadow-sm">
+                    <div class="position-relative overflow-hidden rounded-top">
+                        <img src="{{ category.image.url }}" class="card-img-top category-image" alt="{{ category.name }}" style="height: 220px; object-fit: cover;">
+                        <div class="category-overlay d-flex align-items-end p-3">
+                            <h5 class="text-white mb-0">{{ category.name }}</h5>
+                        </div>
+                    </div>
+                    <div class="card-body text-center p-4">
+                        <a href="{% url 'product_list' %}?category={{ category.slug }}" class="btn btn-outline-success btn-sm px-4">
+                            Смотреть товары <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="products-section mb-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="display-5 fw-bold mb-3" style="color: var(--primary-dark);">Новинки</h2>
+                <p class="text-muted">Самые свежие поступления в нашем каталоге</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for product in featured_products %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="card product-card h-100 border-0 shadow-sm">
+                    <div class="position-relative overflow-hidden rounded-top">
+                        <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}" style="height: 220px; object-fit: cover;">
+                        {% if not product.in_stock %}
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-danger">Нет в наличии</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="product-title mb-2" style="color: var(--primary-dark);">{{ product.name }}</h5>
+                        <p class="product-description text-muted small mb-3">{{ product.description|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="product-price fw-bold" style="color: var(--primary-light); font-size: 1.2rem;">{{ product.price }} ₽</span>
+                            {% if product.in_stock %}
+                            <span class="badge bg-success">В наличии</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer border-0 bg-transparent p-4 pt-0">
+                        <div class="product-actions d-flex justify-content-between align-items-center">
+                            <a href="{% url 'product_detail' product.slug %}" class="btn btn-outline-success btn-sm">
+                                <i class="fas fa-eye me-1"></i>Подробнее
+                            </a>
+                            {% if user.is_authenticated and product.in_stock %}
+                            <form method="post" action="{% url 'add_to_cart' product.id %}" class="d-inline add-to-cart-form">
+                                {% csrf_token %}
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-success btn-sm rounded-circle" style="width: 40px; height: 40px;">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5">
+            <a href="{% url 'product_list' %}" class="btn btn-success btn-lg px-5 py-3">
+                <i class="fas fa-shopping-bag me-2"></i>Все товары
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section py-5 mb-5" style="background: var(--gradient-light); border-radius: 20px;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://blog-travushka.ru/wp-content/uploads/2015/09/t7Nn1BGcPiw.jpg" alt="О нас" class="img-fluid rounded-3 shadow">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="display-5 fw-bold mb-4" style="color: var(--primary-dark);">О компании Уютный Сад</h2>
+                <p class="mb-4" style="color: var(--primary-light);">Мы создаем экологичные и стильные декорации для сада, которые помогут вам создать уютное пространство для отдыха на природе. Наши изделия изготовлены из натуральных материалов и отличаются высоким качеством.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: var(--accent-gold);"></i> Экологически чистые материалы</li>
+                    <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: var(--accent-gold);"></i> Уникальный дизайн для каждого сада</li>
+                    <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: var(--accent-gold);"></i> Доставка по всей России</li>
+                    <li class="mb-2"><i class="fas fa-check-circle me-2" style="color: var(--accent-gold);"></i> Гарантия качества на все изделия</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(26, 60, 52, 0.7) 100%);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.category-card:hover .category-overlay {
+    opacity: 1;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+}
+
+.product-card .card-footer {
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.product-card:hover .card-footer {
+    opacity: 1;
+}
+
+.about-section img {
+    transition: transform 0.5s ease;
+}
+
+.about-section:hover img {
+    transform: scale(1.03);
+}
+</style>
+{% endblock %}

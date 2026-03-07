@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Уютный Сад - Уникальные украшения для вашего сада{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/cart.js' %}" defer></script>
+    <style>
+        :root {
+            --primary-dark: #1a3c34;
+            --primary-light: #2d5a4e;
+            --accent-gold: #c9a96e;
+            --accent-light: #e8d9c5;
+            --text-dark: #2c2c2c;
+            --text-light: #f8f9fa;
+            --gradient-dark: linear-gradient(135deg, #1a3c34 0%, #2d5a4e 100%);
+            --gradient-light: linear-gradient(135deg, #e8d9c5 0%, #f5efe6 100%);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background-color: #f9f7f2;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+
+        .navbar {
+            background: var(--gradient-dark) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 0;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--accent-light) !important;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-gold);
+            margin-right: 0.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--accent-light) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            margin: 0 0.2rem;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .dropdown-menu {
+            background: var(--primary-light);
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .dropdown-item {
+            color: var(--accent-light);
+            padding: 0.7rem 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(201, 169, 110, 0.2);
+            color: var(--accent-gold);
+        }
+
+        .footer {
+            background: var(--gradient-dark);
+            color: var(--accent-light);
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer h5 {
+            color: var(--accent-gold);
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+        }
+
+        .footer p, .footer li {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .social-links a {
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            color: var(--accent-gold) !important;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(201, 169, 110, 0.3);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            border-radius: 30px;
+            font-weight: 600;
+            padding: 0.7rem 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success {
+            background: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+        }
+
+        .btn-success:hover {
+            background: transparent;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+            transform: translateY(-3px);
+        }
+
+        .btn-outline-success {
+            border: 2px solid var(--primary-dark);
+            color: var(--primary-dark);
+        }
+
+        .btn-outline-success:hover {
+            background: var(--primary-dark);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: white;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge {
+            border-radius: 20px;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+        }
+
+        .cart-badge {
+            background: var(--accent-gold) !important;
+            color: var(--primary-dark);
+        }
+
+        main {
+            min-height: calc(100vh - 300px);
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-leaf"></i>Уютный Сад
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!-- Можно добавить дополнительные пункты меню -->
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cart_view' %}">
+                                <i class="fas fa-shopping-basket"></i> Корзина
+                                {% if cart and cart.items.count > 0 %}
+                                <span class="badge bg-success cart-badge">{{ cart.items.count }}</span>
+                                {% else %}
+                                <span class="badge bg-success cart-badge" style="display: none;">0</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle"></i> {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2"></i>Профиль</a></li>
+                                <li><a class="dropdown-item" href="{% url 'order_list' %}"><i class="fas fa-clipboard-list me-2"></i>Мои заказы</a></li>
+                                {% if user.is_staff %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'dashboard:dashboard' %}"><i class="fas fa-chart-line me-2"></i>Дашборд</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Выйти</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt"></i> Войти
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">
+                                <i class="fas fa-user-plus"></i> Регистрация
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="my-4">
+        <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block breadcrumbs %}{% endblock %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 text-center">
+                <h5><i class="fas fa-leaf me-2"></i>Уютный Сад</h5>
+                <p class="mb-4">Создаем уникальные украшения для вашего сада, которые гармонично сочетаются с природой и подчеркивают вашу индивидуальность.</p>
+
+                <div class="mb-4">
+                    <h6>Контакты</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> +7 (951) 253-12-23</li>
+                        <li><i class="fas fa-envelope me-2"></i> uytniysad@yandex.ru</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> г. Курск, Улица Советская 17 Г</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2025 Уютный Сад. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

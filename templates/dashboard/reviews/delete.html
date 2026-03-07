@@ -1,0 +1,50 @@
+{% extends 'dashboard/base.html' %}
+
+{% block page_title %}Удаление отзыва{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card border-danger">
+            <div class="card-header bg-gradient-danger text-white border-0">
+                <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i> Подтверждение удаления</h5>
+            </div>
+            <div class="card-body p-4">
+                <p class="lead">Вы уверены, что хотите удалить этот отзыв?</p>
+                
+                <div class="glass-card p-3 mb-4">
+                    <h6 class="fw-bold">Отзыв от {{ review.user.username }}</h6>
+                    <div class="mb-2">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= review.rating %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% else %}
+                                <i class="far fa-star text-warning"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <p class="mb-2">{{ review.text }}</p>
+                    <small class="text-muted">Оставлен {{ review.created_at|date:"d.m.Y H:i" }}</small>
+                </div>
+
+                <div class="alert-glass border-danger mb-4">
+                    <i class="fas fa-exclamation-circle text-danger me-2"></i>
+                    <span class="text-danger">Это действие нельзя отменить!</span>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'dashboard:review_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i> Отмена
+                        </a>
+                        <button type="submit" class="btn btn-danger bg-gradient-danger border-0">
+                            <i class="fas fa-trash me-2"></i> Удалить отзыв
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 fw-bold text-dark"><i class="fas fa-clipboard-list me-2"></i>Мои заказы</h1>
+        </div>
+    </div>
+</div>
+
+{% if orders %}
+<div class="card border-0 shadow-sm" style="border-radius: 15px;">
+    <div class="card-header border-0 py-3" style="background: var(--gradient-light); border-radius: 15px 15px 0 0;">
+        <h4 class="mb-0 text-dark"><i class="fas fa-history me-2"></i>История заказов</h4>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead style="background: var(--primary-dark); color: white;">
+                    <tr>
+                        <th style="border-radius: 10px 0 0 0;">№ заказа</th>
+                        <th>Дата</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                        <th style="border-radius: 0 10px 0 0;">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr style="transition: all 0.3s ease;">
+                        <td><strong>#{{ order.order_number }}</strong></td>
+                        <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                        <td class="fw-bold" style="color: var(--primary-dark);">{{ order.total_price }} ₽</td>
+                        <td>
+                            <span class="badge" style="background: var(--primary-light); color: white;">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{% url 'order_detail' order.id %}" class="btn btn-outline-success btn-sm" style="border-radius: 20px;">
+                                <i class="fas fa-eye me-1"></i> Подробнее
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center py-5">
+        <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+            <div class="card-body py-5">
+                <i class="fas fa-shopping-bag fa-4x mb-4" style="color: var(--primary-light);"></i>
+                <h3 class="text-dark mb-3">У вас пока нет заказов</h3>
+                <p class="text-muted mb-4">Начните покупки в нашем каталоге</p>
+                <a href="{% url 'product_list' %}" class="btn btn-success btn-lg" style="border-radius: 30px;">
+                    <i class="fas fa-shopping-bag me-2"></i>Перейти к покупкам
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<style>
+.table-hover tbody tr:hover {
+    background-color: rgba(232, 217, 197, 0.3);
+    transform: translateY(-2px);
+}
+
+.table th {
+    border: none;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.table td {
+    vertical-align: middle;
+    border-color: rgba(0,0,0,0.05);
+}
+</style>
+{% endblock %}
