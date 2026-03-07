@@ -205,8 +205,13 @@
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'plant_classifier' %}">
+                                <i class="fa-solid fa-comment-nodes"></i> Классификатор
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'cart_view' %}">
-                                <i class="fas fa-shopping-basket"></i> Корзина
+                                <i class="fa-brands fa-openai"></i> Корзина
                                 {% if cart and cart.items.count > 0 %}
                                 <span class="badge bg-success cart-badge">{{ cart.items.count }}</span>
                                 {% else %}
