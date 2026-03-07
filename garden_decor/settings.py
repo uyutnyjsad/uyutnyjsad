@@ -25,9 +25,9 @@ SECRET_KEY = 'django-insecure-u_pnd=_n$!8%i=p+ncwx&1@oli72f79ytr6qz8g3rqg2(ubm$7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["uyutnyjsad-production.up.railway.app"]
 
-
+CSRF_TRUSTED_ORIGINS = ["uyutnyjsad-production.up.railway.app"]
 # Application definition
 
 INSTALLED_APPS = [
