@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["uyutnyjsad-production.up.railway.app"]
 
-CSRF_TRUSTED_ORIGINS = ["uyutnyjsad-production.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = ["https://uyutnyjsad-production.up.railway.app/"]
 # Application definition
 
 INSTALLED_APPS = [
