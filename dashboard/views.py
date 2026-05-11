@@ -4,11 +4,11 @@ from django.contrib import messages
 from django.db.models import Count, Sum, Q
 from django.utils import timezone
 from datetime import timedelta
-from products.models import Product, Category, Review
+from products.models import Product, Category, Review, News
 from orders.models import Order, OrderItem
 from users.models import UserProfile
 from django.contrib.auth.models import User
-from .forms import ProductAdminForm, CategoryAdminForm, OrderAdminForm, UserAdminForm
+from .forms import ProductAdminForm, CategoryAdminForm, OrderAdminForm, UserAdminForm, NewsAdminForm
 from django.core.paginator import Paginator
 
 def staff_required(function):
@@ -351,12 +351,107 @@ def review_toggle(request, pk):
 @staff_required
 def review_delete(request, pk):
     review = get_object_or_404(Review, pk=pk)
-    
+
     if request.method == 'POST':
         review.delete()
         messages.success(request, 'Отзыв успешно удален!')
         return redirect('dashboard:review_list')
-    
+
     return render(request, 'dashboard/reviews/delete.html', {
         'review': review
     })
+
+
+@staff_required
+def news_list(request):
+    news = News.objects.all().order_by('-created_at')
+
+    search_query = request.GET.get('search', '')
+    if search_query:
+        news = news.filter(
+            Q(title__icontains=search_query) |
+            Q(content__icontains=search_query)
+        )
+
+    status_filter = request.GET.get('status', '')
+    if status_filter == 'published':
+        news = news.filter(is_published=True)
+    elif status_filter == 'draft':
+        news = news.filter(is_published=False)
+
+    paginator = Paginator(news, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'dashboard/news/list.html', {
+        'page_obj': page_obj,
+        'search_query': search_query,
+        'status_filter': status_filter
+    })
+
+
+@staff_required
+def news_create(request):
+    if request.method == 'POST':
+        form = NewsAdminForm(request.POST, request.FILES)
+        if form.is_valid():
+            news = form.save()
+            messages.success(request, f'Новость "{news.title}" успешно создана!')
+            return redirect('dashboard:news_list')
+    else:
+        form = NewsAdminForm()
+
+    return render(request, 'dashboard/news/form.html', {
+        'form': form,
+        'title': 'Создать новость'
+    })
+
+
+@staff_required
+def news_edit(request, pk):
+    news = get_object_or_404(News, pk=pk)
+
+    if request.method == 'POST':
+        form = NewsAdminForm(request.POST, request.FILES, instance=news)
+        if form.is_valid():
+            news = form.save()
+            messages.success(request, f'Новость "{news.title}" успешно обновлена!')
+            return redirect('dashboard:news_list')
+    else:
+        form = NewsAdminForm(instance=news)
+
+    return render(request, 'dashboard/news/form.html', {
+        'form': form,
+        'title': 'Редактировать новость',
+        'news': news
+    })
+
+
+@staff_required
+def news_delete(request, pk):
+    news = get_object_or_404(News, pk=pk)
+
+    if request.method == 'POST':
+        news_title = news.title
+        news.delete()
+        messages.success(request, f'Новость "{news_title}" успешно удалена!')
+        return redirect('dashboard:news_list')
+
+    return render(request, 'dashboard/news/delete.html', {
+        'news': news
+    })
+
+
+@staff_required
+def news_toggle_publish(request, pk):
+    news = get_object_or_404(News, pk=pk)
+
+    if news.is_published:
+        news.is_published = False
+        messages.success(request, 'Новость скрыта')
+    else:
+        news.is_published = True
+        messages.success(request, 'Новость опубликована')
+
+    news.save()
+    return redirect('dashboard:news_list')

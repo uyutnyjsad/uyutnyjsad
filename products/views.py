@@ -6,7 +6,7 @@ import base64
 
 from .forms import PlantClassifierForm, ReviewForm
 from .huggingface_service import PlantClassifierError, classify_plant_and_recommend
-from .models import Category, Product
+from .models import Category, Product, News
 
 
 def home(request):
@@ -153,3 +153,41 @@ def product_detail(request, slug):
             'form': form,
         },
     )
+
+
+def contacts(request):
+    """Страница контактов с картой"""
+    return render(request, 'products/contacts.html')
+
+
+def news_list(request):
+    """Список новостей для пользователей"""
+    news = News.objects.filter(is_published=True).order_by('-created_at')
+    
+    paginator = Paginator(news, 6)
+    page = request.GET.get('page', 1)
+    
+    try:
+        news_page = paginator.page(page)
+    except PageNotAnInteger:
+        news_page = paginator.page(1)
+    except EmptyPage:
+        news_page = paginator.page(paginator.num_pages)
+    
+    return render(request, 'products/news_list.html', {
+        'news': news_page,
+    })
+
+
+def news_detail(request, slug):
+    """Детальная страница новости"""
+    news = get_object_or_404(News, slug=slug, is_published=True)
+    
+    related_news = News.objects.filter(
+        is_published=True
+    ).exclude(pk=news.pk).order_by('-created_at')[:3]
+    
+    return render(request, 'products/news_detail.html', {
+        'news': news,
+        'related_news': related_news,
+    })

@@ -422,6 +422,7 @@
                     <ul class="dropdown-menu dropdown-menu-dark">
                         <li><a class="dropdown-item" href="{% url 'dashboard:product_create' %}"><i class="fas fa-plus me-2"></i>Добавить товар</a></li>
                         <li><a class="dropdown-item" href="{% url 'dashboard:category_create' %}"><i class="fas fa-tag me-2"></i>Добавить категорию</a></li>
+                        <li><a class="dropdown-item" href="{% url 'dashboard:news_create' %}"><i class="fas fa-newspaper me-2"></i>Добавить новость</a></li>
                     </ul>
                 </div>
                 
@@ -491,6 +492,12 @@
                     <a class="nav-link {% if 'review' in request.resolver_match.url_name %}active{% endif %}" 
                        href="{% url 'dashboard:review_list' %}">
                         <i class="fas fa-star-half-alt"></i> Отзывы
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if 'news' in request.resolver_match.url_name %}active{% endif %}" 
+                       href="{% url 'dashboard:news_list' %}">
+                        <i class="fas fa-newspaper"></i> Новости
                     </a>
                 </li>
             </ul>

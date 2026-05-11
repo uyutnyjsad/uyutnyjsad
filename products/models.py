@@ -97,3 +97,38 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Отзыв от {self.user} на {self.product}"
+
+
+class News(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Заголовок")
+    slug = models.SlugField(unique=True, blank=True, verbose_name="URL")
+    short_description = models.CharField(max_length=300, verbose_name="Краткое описание")
+    content = models.TextField(verbose_name="Содержание")
+    image = models.ImageField(upload_to='news', blank=True, null=True, verbose_name="Изображение")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+
+    class Meta:
+        verbose_name = "Новость"
+        verbose_name_plural = "Новости"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+            original_slug = self.slug
+            counter = 1
+            while News.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
+                self.slug = f"{original_slug}-{counter}"
+                counter += 1
+        super().save(*args, **kwargs)
+
+    @property
+    def image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        return '/static/images/news-placeholder.jpg'

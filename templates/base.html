@@ -199,7 +199,21 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <!-- Можно добавить дополнительные пункты меню -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'product_list' %}">
+                            <i class="fas fa-store"></i> Каталог
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'news_list' %}">
+                            <i class="fas fa-newspaper"></i> Новости
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contacts' %}">
+                            <i class="fas fa-map-marker-alt"></i> Контакты
+                        </a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav ms-auto">
@@ -282,7 +296,14 @@
                     <ul class="list-unstyled">
                         <li><i class="fas fa-phone me-2"></i> +7 (951) 253-12-23</li>
                         <li><i class="fas fa-envelope me-2"></i> uytniysad@yandex.ru</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> г. Курск, Улица Советская 17 Г</li>
+                        <li><a href="{% url 'contacts' %}" class="text-white text-decoration-none"><i class="fas fa-map-marker-alt me-2"></i> г. Курск, Улица Советская 17 Г</a></li>
+                    </ul>
+                </div>
+                <div class="mb-4">
+                    <h6>Информация</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'news_list' %}" class="text-white text-decoration-none"><i class="fas fa-newspaper me-2"></i>Новости</a></li>
+                        <li><a href="{% url 'contacts' %}" class="text-white text-decoration-none"><i class="fas fa-phone me-2"></i>Связаться с нами</a></li>
                     </ul>
                 </div>
 

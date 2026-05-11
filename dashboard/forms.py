@@ -1,7 +1,24 @@
 from django import forms
-from products.models import Product, Category, Review
+from products.models import Product, Category, Review, News
 from orders.models import Order
 from django.contrib.auth.models import User
+
+
+class NewsAdminForm(forms.ModelForm):
+    slug = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+
+    class Meta:
+        model = News
+        fields = ['title', 'slug', 'short_description', 'content', 'image', 'is_published']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 8}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'short_description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Краткое описание новости'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['slug'].widget.attrs.update({'class': 'form-control', 'readonly': 'readonly'})
 
 class ProductAdminForm(forms.ModelForm):
     slug = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))

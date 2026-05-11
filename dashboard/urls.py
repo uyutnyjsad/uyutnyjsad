@@ -32,4 +32,11 @@ urlpatterns = [
     path('reviews/', views.review_list, name='review_list'),
     path('reviews/<int:pk>/toggle/', views.review_toggle, name='review_toggle'),
     path('reviews/<int:pk>/delete/', views.review_delete, name='review_delete'),
+
+    # Новости
+    path('news/', views.news_list, name='news_list'),
+    path('news/create/', views.news_create, name='news_create'),
+    path('news/<int:pk>/edit/', views.news_edit, name='news_edit'),
+    path('news/<int:pk>/delete/', views.news_delete, name='news_delete'),
+    path('news/<int:pk>/toggle/', views.news_toggle_publish, name='news_toggle'),
 ]
