@@ -119,7 +119,7 @@ class News(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.title, allow_unicode=True)
             original_slug = self.slug
             counter = 1
             while News.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
