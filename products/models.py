@@ -119,12 +119,7 @@ class News(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title, allow_unicode=True)
-            original_slug = self.slug
-            counter = 1
-            while News.objects.filter(slug=self.slug).exclude(pk=self.pk).exists():
-                self.slug = f"{original_slug}-{counter}"
-                counter += 1
+            self.slug = generate_unique_slug(News, self.title, instance=self)
         super().save(*args, **kwargs)
 
     @property

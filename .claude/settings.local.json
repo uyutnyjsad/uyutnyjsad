@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python manage.py migrate products 0004_fix_cyrillic_news_slugs)"
+    ]
+  }
+}
