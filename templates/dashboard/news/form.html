@@ -15,25 +15,45 @@
         <div class="glass-card p-4">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger mb-3">
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
                 <div class="mb-3">
                     <label class="form-label">Заголовок</label>
                     {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger small mt-1">{{ form.title.errors|join:", " }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">URL (slug)</label>
                     {{ form.slug }}
+                    {% if form.slug.errors %}
+                        <div class="text-danger small mt-1">{{ form.slug.errors|join:", " }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Краткое описание</label>
                     {{ form.short_description }}
+                    {% if form.short_description.errors %}
+                        <div class="text-danger small mt-1">{{ form.short_description.errors|join:", " }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Содержание</label>
                     {{ form.content }}
+                    {% if form.content.errors %}
+                        <div class="text-danger small mt-1">{{ form.content.errors|join:", " }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
@@ -44,6 +64,9 @@
                     </div>
                     {% endif %}
                     {{ form.image }}
+                    {% if form.image.errors %}
+                        <div class="text-danger small mt-1">{{ form.image.errors|join:", " }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="form-check mb-4">
