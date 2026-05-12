@@ -417,6 +417,8 @@ def news_edit(request, pk):
             news = form.save()
             messages.success(request, f'Новость "{news.title}" успешно обновлена!')
             return redirect('dashboard:news_list')
+        else:
+            messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
         form = NewsAdminForm(instance=news)
 
