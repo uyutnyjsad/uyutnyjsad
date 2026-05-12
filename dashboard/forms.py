@@ -11,7 +11,8 @@ class NewsAdminForm(forms.ModelForm):
         model = News
         fields = ['title', 'slug', 'short_description', 'content', 'image', 'is_published']
         widgets = {
-            'content': forms.Textarea(attrs={'rows': 8}),
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'content': forms.Textarea(attrs={'rows': 8, 'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'short_description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Краткое описание новости'}),
         }
@@ -19,6 +20,12 @@ class NewsAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['slug'].widget.attrs.update({'class': 'form-control', 'readonly': 'readonly'})
+
+    def clean_slug(self):
+        slug = self.cleaned_data.get('slug')
+        if not slug and self.instance and self.instance.pk:
+            return self.instance.slug
+        return slug
 
 class ProductAdminForm(forms.ModelForm):
     slug = forms.CharField(required=False, widget=forms.TextInput(attrs={'readonly': 'readonly'}))
