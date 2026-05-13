@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python manage.py migrate products 0004_fix_cyrillic_news_slugs)"
+      "Bash(python manage.py migrate products 0004_fix_cyrillic_news_slugs)",
+      "Bash(python manage.py makemigrations products --name \"news_slug_max_length_200\")",
+      "Bash(python manage.py makemigrations products --name \"product_category_slug_max_length_200\")",
+      "Bash(python manage.py migrate products)",
+      "Bash(python manage.py makemigrations products --name \"slug_max_length_100\")"
     ]
   }
 }

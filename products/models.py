@@ -6,7 +6,7 @@ import math
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
-    slug = models.SlugField(unique=True, blank=True, verbose_name="URL")
+    slug = models.SlugField(max_length=100, unique=True, blank=True, verbose_name="URL")
     description = models.TextField(blank=True, verbose_name="Описание")
     image = models.ImageField(upload_to='categories', blank=True, null=True, verbose_name="Изображение")
     icon = models.CharField(max_length=50, default='leaf', verbose_name="Иконка")
@@ -20,12 +20,12 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug or self._state.adding:
-            self.slug = generate_unique_slug(Category, self.name, instance=self)
+            self.slug = generate_unique_slug(Category, self.name, instance=self, max_length=100)
         else:
             try:
                 old_instance = Category.objects.get(pk=self.pk)
                 if old_instance.name != self.name:
-                    self.slug = generate_unique_slug(Category, self.name, instance=self)
+                    self.slug = generate_unique_slug(Category, self.name, instance=self, max_length=100)
             except Category.DoesNotExist:
                 pass
         
@@ -38,8 +38,8 @@ class Category(models.Model):
         return '/static/images/category-placeholder.jpg'
 
 class Product(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Название")
-    slug = models.SlugField(unique=True, blank=True, verbose_name="URL")
+    name = models.CharField(max_length=100, verbose_name="Название")
+    slug = models.SlugField(max_length=100, unique=True, blank=True, verbose_name="URL")
     description = models.TextField(verbose_name="Описание")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     image = models.ImageField(upload_to='products', verbose_name="Изображение")
@@ -58,12 +58,12 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug or self._state.adding:
-            self.slug = generate_unique_slug(Product, self.name, instance=self)
+            self.slug = generate_unique_slug(Product, self.name, instance=self, max_length=100)
         else:
             try:
                 old_instance = Product.objects.get(pk=self.pk)
                 if old_instance.name != self.name:
-                    self.slug = generate_unique_slug(Product, self.name, instance=self)
+                    self.slug = generate_unique_slug(Product, self.name, instance=self, max_length=100)
             except Product.DoesNotExist:
                 pass
         
@@ -100,8 +100,8 @@ class Review(models.Model):
 
 
 class News(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Заголовок")
-    slug = models.SlugField(unique=True, blank=True, verbose_name="URL")
+    title = models.CharField(max_length=100, verbose_name="Заголовок")
+    slug = models.SlugField(max_length=100, unique=True, blank=True, verbose_name="URL")
     short_description = models.CharField(max_length=300, verbose_name="Краткое описание")
     content = models.TextField(verbose_name="Содержание")
     image = models.ImageField(upload_to='news', blank=True, null=True, verbose_name="Изображение")
@@ -119,7 +119,7 @@ class News(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = generate_unique_slug(News, self.title, instance=self)
+            self.slug = generate_unique_slug(News, self.title, instance=self, max_length=100)
         super().save(*args, **kwargs)
 
     @property

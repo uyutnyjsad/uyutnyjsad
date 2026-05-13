@@ -43,24 +43,24 @@ def generate_slug_from_name(name):
     
     return slug
 
-def generate_unique_slug(model, name, current_slug=None, instance=None):
+def generate_unique_slug(model, name, current_slug=None, instance=None, max_length=50):
     """
-    Генерирует уникальный slug для модели
+    Генерирует уникальный slug для модели, не превышающий max_length символов.
     """
     if current_slug:
         base_slug = generate_slug_from_name(current_slug)
     else:
         base_slug = generate_slug_from_name(name)
-    
+
+    base_slug = base_slug[:max_length]
     slug = base_slug
     counter = 1
-    
-    # Проверяем уникальность slug
+
     while model.objects.filter(slug=slug).exists():
-        # Если это редактирование существующего объекта и slug принадлежит ему
         if instance and model.objects.filter(slug=slug, pk=instance.pk).exists():
             break
-        slug = f"{base_slug}-{counter}"
+        suffix = f"-{counter}"
+        slug = f"{base_slug[:max_length - len(suffix)]}{suffix}"
         counter += 1
-    
+
     return slug
